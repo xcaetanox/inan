@@ -1,0 +1,153 @@
+<div class="container">
+    <div class="modal fade" id="searchCliente" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Selecionar Cliente</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline">
+                        <div class="jumbotron">
+                            <label>Procurar</label>
+                            <input type="text" ng-model="procurar" class="form-control" placeholder="Procurar...">
+                        </div>
+                    </form>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-class-odd="'striped'" dir-paginate="n in clienteParaMovimentar |filter:procurar|itemsPerPage:5" ng-click="setSelectedCli(n)">
+                                <td>{{n.nome}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <dir-pagination-controls max-size="5" boundary-links="true"></dir-pagination-controls>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="prdModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Selecionar Cliente</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline">
+                        <div class="jumbotron">
+                            <label>Procurar</label>
+                            <input type="text" ng-model="procurar" class="form-control" placeholder="Procurar...">
+                        </div>
+                    </form>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Descrição</th>
+                                <th>Tipo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-class-odd="'striped'" dir-paginate="n in produtosParaMovimentar |filter:procurar|itemsPerPage:5" ng-click="setSelectedPrd(n)">
+                                <td>{{n.descricao}}</td>
+                                <td>{{n.tipo}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <dir-pagination-controls max-size="5" boundary-links="true"></dir-pagination-controls>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <section class="content">
+            <div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="pull-left">
+                            <form class="form-inline" name="formMovimento">
+                                <input class="form-control input-sm" ng-readonly="true" type="text" ng-model="clienteSelecioando.nome" ng-required="true" placeholder="Nome Do cliente" />
+                                <button type="button" class="btn btn-success btn-filter" data-toggle="modal" data-target="#searchCliente">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                </button>
+
+                                <input class="form-control input-sm" ng-readonly="true" type="text" ng-model="produtoSelecionado.descricao" ng-required="true" placeholder="Produto" />
+                                <button type="button" class="btn btn-success btn-filter" data-toggle="modal" data-target="#prdModal">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                                <input class="form-control input-sm" type="text" ng-model="movimento.pedido" ng-required="true" placeholder="Numero Pedido" />
+
+                                <div class="radio">
+                                    <label><input type="radio" ng-model="movimento.operacao" ng-required="true" value="0" name="optradio">Sáida</label>
+                                </div>
+                                <div class="radio">
+                                    <label><input type="radio" ng-model="movimento.operacao" ng-required="true" value="1" name="optradio">Entrada</label>
+                                </div>
+
+                                <input class="form-control input-sm" type="number" ng-model="movimento.qtde" ng-required="true" placeholder="Qdte" />
+                                <button type="button" class="btn btn-success btn-filter" ng-disabled="formMovimento.$invalid" ng-click="salvarMovimento(movimento)">Adicionar Movimento</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <form class="form-inline">
+                            <div class="jumbotron container">
+                                <label>Procurar</label>
+                                <input type="text" ng-model="procurar" class="form-control input-sm" placeholder="Procurar...">
+                            </div>
+                        </form>
+                        <table class="table table-filter">
+                            <tbody>
+                                <tr ng-class-odd="'striped'" ng-repeat="n in movimentos.slice().reverse() |filter:procurar|itemsPerPage:5">
+                                    <td>
+                                        <td>
+
+                                            <div class="media">
+                                                <a href="#" class="pull-left">
+                                                    <img ng-src="http://www.clker.com/cliparts/3/a/4/9/11949855912003738015arrow-down-red_benji_par_01.svg.thumb.png" ng-show="n.operacao!=1" class="media-photo">
+                                                    <img ng-src="http://www.clker.com/cliparts/8/8/2/2/11949856011357057871arrow-up-green_benji_par_01.svg.thumb.png" ng-show="n.operacao==1" class="media-photo">
+                                                </a>
+                                                <div class="media-body">
+                                                    <h4 class="title">
+                                                        Quantidade: {{n.qtde}}
+                                                    </h4>
+                                                    <h5>
+                                                        Cliente : {{n.cliente.nome}}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="media-body">
+                                                <h4>
+                                                    Produto: {{n.produto.descricao}}
+                                                </h4>
+                                                <h4>
+                                                    Pedido: {{n.pedido}}
+                                                </h4>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger" ng-click="salvarMovimento(n,'remove')">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
+                                        </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls max-size="5" boundary-links="true"></dir-pagination-controls>
+                    </div>
+
+
+                </div>
+            </div>

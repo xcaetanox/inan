@@ -1,0 +1,30 @@
+<div class="jumbotron container">
+
+    <div class="container">
+        <form class="form-inline">
+            <div class="form-group">
+                <label>Procurar</label>
+                <input type="text" ng-model="procurar" class="form-control" placeholder="Procurar...">
+            </div>
+        </form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Produto</th>
+                    <th>Tipo</th>
+                    <th>Saldo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-class-odd="'striped'" dir-paginate="n in listaProdutosClienteSalvo.slice().reverse() |filter:procurar|itemsPerPage:5">
+                    <td>{{n.cliente.nome}}</td>
+                    <td>{{n.produto.descricao}}</td>
+                    <td>{{n.produto.tipo}}</td>
+                    <td>{{n.saldo}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <dir-pagination-controls max-size="5" boundary-links="true"></dir-pagination-controls>
+    </div>
+</div>
