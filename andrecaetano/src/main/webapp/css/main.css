@@ -1,0 +1,21 @@
+.mytable {
+    width: 760px;
+    _width: 760px;
+}
+
+#celula1 {
+    width: 100px;
+    padding: 10px;
+    _width: 255px;
+}
+
+#celula2 {
+    width: 200px;
+    padding: 10px;
+    _width: 495px;
+}
+
+.striped {
+    color: #000000;
+    background-color: #9BC8D4;
+}
